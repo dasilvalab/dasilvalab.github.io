@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NeuroLab — Decoding Molecular Signatures in Psychiatric Disorders</title>
+<meta name="theme-color" content="#0e1a2b"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e1a2b;--navy-2:#0a1523;--gold:#d3a85a;--cream:#f4efe6;--ink:#0f243a}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:#f7f7f5;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6}
+.container{width:min(1150px,92vw);margin:0 auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(160%) blur(8px);background:linear-gradient(180deg, rgba(10,18,31,.85), rgba(10,18,31,.65));border-bottom:1px solid rgba(211,168,90,.18)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700}.brand-icon{width:28px;height:28px;border-radius:8px;background:radial-gradient(80% 80% at 30% 30%, var(--gold), #a1762b 70%, #6d5326 100%)}nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+nav a{text-decoration:none;color:#fff;opacity:.9}nav a:hover{opacity:1;color:var(--gold)}
+.hero{position:relative}.hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:min(6vw,60px);align-items:center;padding:64px 0}
+h1{font-family:Playfair Display,serif;font-weight:700;line-height:1.1;margin:.35em 0 .4em;font-size:clamp(2rem,6vw,3.6rem)}
+.kicker{color:var(--gold);text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;font-weight:600}.lead{max-width:58ch}
+.cta{display:inline-flex;gap:10px;padding:12px 18px;border-radius:999px;border:1px solid rgba(241,204,125,.55);background:linear-gradient(180deg, rgba(241,204,125,.14), rgba(211,168,90,.08));color:#fff;font-weight:600;text-decoration:none}
+.visual{position:relative;height:400px;border-radius:18px;background:linear-gradient(180deg, var(--navy-2), #0d2136);box-shadow:inset 0 0 0 1px rgba(241,204,125,.15),0 10px 40px rgba(0,0,0,.35)}
+#constellation{position:absolute;inset:0;width:100%;height:100%;display:block}#neuron{position:absolute;width:min(56%,540px);right:-2%;top:-6%;opacity:.9}
+section.light{background:var(--cream);color:#111}.section-pad{padding:48px 0}h2{font-family:Playfair Display,serif;color:var(--ink)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.tile{background:#fff;border:1px solid #e7e2d8;border-radius:18px;padding:20px}
+.news{display:grid;gap:14px}.news-item{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed rgba(241,204,125,.22)}.news-date{width:7.2ch;color:#d9c8a7}
+.grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:34px}.dark-strip{background:linear-gradient(180deg, #0e1a2b, #0b1c2d);border-top:1px solid rgba(211,168,90,.18);border-bottom:1px solid rgba(211,168,90,.14)}
+#people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+footer{background:#0a1523;color:#ddd6c5;padding:32px 0}
+</style>
+</head>
+<body>
+<header><div class="container nav">
+  <a class="brand" href="index.html"><span class="brand-icon"></span><span>NeuroLab</span></a>
+  <nav><ul>
+    <li><a href="#people">People</a></li>
+    <li><a href="publications.html">Publications</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#join">Join Us</a></li>
+  </ul></nav>
+</div></header>
+
+<main class="hero"><div class="container hero-inner">
+  <div>
+    <div class="kicker">Neuroscience • Epigenomics • Data Science</div>
+    <h1>Decoding Molecular Signatures in Psychiatric Disorders</h1>
+    <p class="lead">We integrate cell-type–specific epigenomics, transcriptomics, and advanced computational modeling to explain resilience and vulnerability across alcohol and related neuropsychiatric phenotypes.</p>
+    <a class="cta" href="#research">Explore Our Research ▶</a>
+  </div>
+  <div class="visual" aria-hidden="true">
+    <canvas id="constellation"></canvas>
+    <svg id="neuron" viewBox="0 0 600 600" fill="none" stroke="#e9c576" stroke-width="1.2">
+      <circle cx="300" cy="300" r="54" fill="#f2d89a" opacity=".25"/>
+      <path d="M300 246c-8 40-6 64 0 108"/>
+      <path d="M300 254c22-40 56-64 120-86"/>
+      <path d="M300 254c-24-34-70-48-128-60"/>
+      <path d="M300 316c40 18 84 42 140 98"/>
+      <path d="M300 316c-38 22-90 30-168 52"/>
+      <path d="M300 330c-12 46-10 86-6 134"/>
+      <path d="M300 330c20 26 48 48 90 66"/>
+      <path d="M300 300c-30 6-52 10-88 0"/>
+    </svg>
+  </div>
+</div></main>
+
+<section id="research" class="light section-pad">
+  <div class="container">
+    <h2>Our Research</h2>
+    <div class="tiles">
+      <article class="tile"><h3>Molecular</h3><p>Epigenomics & transcriptomics (CUT&RUN, histone PTMs, RNA‑seq).</p></article>
+      <article class="tile"><h3>Synaptic</h3><p>D1‑MSNs & projection circuits; optogenetics/patch.</p></article>
+      <article class="tile"><h3>Computational</h3><p>Falcon: covariate selection, mediation, and ML.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="dark-strip section-pad" id="publications">
+  <div class="container grid-2">
+    <div>
+      <div class="kicker">Featured Publication</div>
+      <h3 id="feat-title">Featured Publication</h3>
+      <div id="feat-meta" style="color:#e6d8bf"></div>
+      <p style="color:#efe6d6">Cell‑type–specific histone acetylation maps and multivariate modeling identify Sirt7‑linked resilience pathways.</p>
+      <a id="feat-link" class="cta" href="#">Read Paper ↗</a>
+    </div>
+    <div id="news" class="news" aria-live="polite" aria-busy="false"></div>
+  </div>
+</section>
+
+<section id="people" class="light section-pad">
+  <div class="container">
+    <h2>People</h2>
+    <div id="people-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© <span id="y"></span> NeuroLab</div>
+</footer>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+// Simple constellation
+(function(){
+  const c=document.getElementById('constellation'); const x=c.getContext('2d'); let w,h,p=[]; const N=60;
+  function R(){w=c.clientWidth;h=c.clientHeight;c.width=w;c.height=h;p=Array.from({length:N},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35}))}
+  function S(){x.clearRect(0,0,w,h); const m=120; p.forEach(a=>{a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>w)a.vx*=-1;if(a.y<0||a.y>h)a.vy*=-1;x.beginPath();x.arc(a.x,a.y,1.6,0,Math.PI*2);x.fillStyle='rgba(241,204,125,.85)';x.fill()}); x.strokeStyle='rgba(241,204,125,.24)'; for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.hypot(dx,dy);if(d<m){x.globalAlpha=1-(d/m);x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.stroke();}} x.globalAlpha=1; requestAnimationFrame(S)}
+  R();S(); addEventListener('resize',R);
+})();
+// Data loader + avatar helpers
+(async function(){
+  function initials(name){return (String(name||'').trim().split(/\s+/).map(w=>w[0]?w[0].toUpperCase():'').filter(Boolean).slice(0,2).join(''))||'NL'}
+  function avatarSVG(text,size,bg='#0e1a2b',fg='#f1e9d7'){const f=Math.floor(size*0.38);const s=`<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}'><rect width='100%' height='100%' rx='14' fill='${bg}'/><text x='50%' y='58%' text-anchor='middle' font-family='Inter, Arial' font-size='${f}' fill='${fg}' font-weight='700'>${text}</text></svg>`;return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)}
+  function avatarSrc(p,size){return (p&&p.photo&&p.photo.trim()!=='')?p.photo:avatarSVG(initials(p&&p.name),size||88)}
+  async function load(){const r=await fetch('lab_data.json',{cache:'no-store'});return r.ok? r.json(): {news:[],publications:[],people:[]};}
+  const data=await load();
+  if(Array.isArray(data.publications)&&data.publications.length){const t=data.publications[0]; document.getElementById('feat-title').textContent=t.title; document.getElementById('feat-meta').textContent=[t.authors,t.journal,t.year].filter(Boolean).join(' — '); if(t.link) document.getElementById('feat-link').href=t.link;}
+  const news=document.getElementById('news'); if(news&&Array.isArray(data.news)){news.innerHTML=''; data.news.sort((a,b)=>a.date<b.date?1:-1).slice(0,6).forEach(n=>{const row=document.createElement('div'); row.className='news-item'; row.innerHTML=`<span class='news-date'>${n.date}</span><span>${n.link?`<a href='${n.link}'>${n.title}</a>`:n.title}</span>`; news.appendChild(row);});}
+  const grid=document.getElementById('people-grid'); if(grid&&Array.isArray(data.people)){grid.innerHTML=''; data.people.forEach(p=>{const card=document.createElement('article'); card.className='tile'; card.innerHTML=`<div style="display:flex;gap:14px;align-items:center"><img src="${avatarSrc(p,88)}" alt="${p.name}" width="88" height="88" style="width:88px;height:88px;border-radius:14px;object-fit:cover;border:1px solid #e7e2d8"/><div><h3 style="margin:0">${p.name}</h3><div style="color:#3f4550">${p.role||''}</div>${p.email?`<a href="mailto:${p.email}" style="color:#6a5320">${p.email}</a>`:''}</div></div>${p.bio?`<p style="margin:12px 0 0; color:#3f4550">${p.bio}</p>`:''}`; grid.appendChild(card);});}
+})();
+</script>
+</body></html>

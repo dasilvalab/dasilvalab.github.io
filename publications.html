@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Publications — NeuroLab</title><meta name="theme-color" content="#0e1a2b"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e1a2b;--navy-2:#0a1523;--gold:#d3a85a}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:#f7f7f5;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6}
+.container{width:min(1100px,92vw);margin:0 auto}header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(160%) blur(8px);background:linear-gradient(180deg, rgba(10,18,31,.85), rgba(10,18,31,.65));border-bottom:1px solid rgba(211,168,90,.18)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}.brand{display:flex;gap:12px;font-weight:700}
+.brand-icon{width:28px;height:28px;border-radius:8px;background:radial-gradient(80% 80% at 30% 30%, var(--gold), #a1762b 70%, #6d5326 100%)}
+h1{font-family:Playfair Display,serif;margin:.4em 0}.hero{padding:48px 0 20px;border-bottom:1px solid rgba(211,168,90,.18)}
+.panel{background:rgba(10,18,31,.45);border:1px solid rgba(211,168,90,.16);border-radius:16px;padding:16px;margin:16px 0}
+.filters{display:flex;gap:12px;flex-wrap:wrap}.fsel,.search{appearance:none;background:#0b1c2d;color:#f3eee3;border:1px solid rgba(241,204,125,.25);border-radius:10px;padding:8px 12px}
+.list{display:grid;gap:14px;margin:22px 0 60px}.pub{background:#0b1c2d;border:1px solid rgba(241,204,125,.12);border-radius:14px;padding:16px}
+.tag{font-size:.78rem;padding:4px 8px;border-radius:999px;border:1px solid rgba(241,204,125,.4);color:#f1e9d7;margin-right:6px}
+footer{background:#0a1523;color:#ddd6c5;padding:24px 0}
+</style></head><body>
+<header><div class="container nav"><a class="brand" href="index.html"><span class="brand-icon"></span><span>NeuroLab</span></a>
+<nav><ul style="display:flex;gap:24px;list-style:none;margin:0;padding:0">
+<li><a href="index.html#research">Research</a></li><li><a href="people.html">People</a></li><li><a href="publications.html">Publications</a></li></ul></nav></div></header>
+<section class="hero"><div class="container"><div style="color:#d3a85a;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;font-weight:600">Publications</div><h1>Our Papers</h1>
+<p>A curated list of our peer‑reviewed work across neuroscience, epigenomics, transcriptomics, and computational methodology.</p>
+<div class="panel"><div class="filters">
+<select id="year" class="fsel" aria-label="Filter by year"><option value="">All years</option></select>
+<select id="journal" class="fsel" aria-label="Filter by journal"><option value="">All journals</option></select>
+<input id="q" class="search" type="search" placeholder="Search title / author / keyword…" aria-label="Search publications"/></div></div></div></section>
+<main class="container"><div id="pub-list" class="list" aria-live="polite"></div></main>
+<footer><div class="container">© <span id="y"></span> NeuroLab</div></footer>
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+async function loadData(){const r=await fetch('lab_data.json',{cache:'no-store'});return r.ok? r.json(): {publications:[]}}
+function uniq(a){return Array.from(new Set(a.filter(v=>v!==undefined&&v!==null&&v!=='')))}
+function render(list){const w=document.getElementById('pub-list');w.innerHTML='';if(!list.length){w.innerHTML='<div class="pub">No publications match your filters.</div>';return;}
+list.forEach(p=>{const d=document.createElement('article');d.className='pub';const t=p.link?`<a href="${p.link}"><h3>${p.title}</h3></a>`:`<h3>${p.title}</h3>`;const m=[p.authors,p.journal,p.year].filter(Boolean).join(' — ');const tags=(p.tags||[]).map(tg=>`<span class="tag">${tg}</span>`).join('');d.innerHTML=`${t}<div>${m}</div>${tags?`<div style="margin-top:8px">${tags}</div>`:''}`;w.appendChild(d);});}
+(async function(){const data=await loadData();const pubs=Array.isArray(data.publications)?data.publications.slice():[];pubs.sort((a,b)=>(b.year||0)-(a.year||0)||String(a.title).localeCompare(String(b.title)));const ySel=document.getElementById('year');const jSel=document.getElementById('journal');uniq(pubs.map(p=>p.year)).sort((a,b)=>b-a).forEach(y=>{const o=document.createElement('option');o.value=o.textContent=y;ySel.appendChild(o)});uniq(pubs.map(p=>p.journal)).sort().forEach(j=>{const o=document.createElement('option');o.value=o.textContent=j;jSel.appendChild(o)});function apply(){const y=ySel.value;const j=jSel.value;const q=document.getElementById('q').value.toLowerCase().trim();render(pubs.filter(p=>{const okY=!y||String(p.year)===y;const okJ=!j||p.journal===j;const blob=`${p.title||''} ${p.authors||''} ${p.journal||''} ${(p.tags||[]).join(' ')}`.toLowerCase();const okQ=!q||blob.includes(q);return okY&&okJ&&okQ;}));}
+ySel.addEventListener('change',apply);jSel.addEventListener('change',apply);document.getElementById('q').addEventListener('input',apply);render(pubs);})();</script>
+</body></html>
