@@ -1,0 +1,30 @@
+body {
+  margin: 0; font-family: Arial, sans-serif;
+  background: #0b132b; color: #fff;
+}
+header {
+  background: #1c2541; padding: 1rem; display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center;
+}
+header h1 { color: #f0a500; margin: 0; font-size: 1.5rem; }
+nav a {
+  color: #fff; margin: 0 0.5rem; text-decoration: none;
+}
+.hero {
+  padding: 2rem; background: #3a506b; text-align: center;
+}
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem; padding: 1rem;
+}
+.card {
+  background: #1c2541; padding: 1rem; border-radius: 8px;
+  text-align: center; color: #f0a500;
+}
+footer {
+  background: #1c2541; text-align: center; padding: 1rem;
+}
+@media (max-width: 600px) {
+  header { flex-direction: column; }
+  nav { margin-top: 0.5rem; }
+}
