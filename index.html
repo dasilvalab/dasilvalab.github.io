@@ -88,6 +88,14 @@ footer{background:#0a1523;color:#ddd6c5;padding:32px 0}
   .tiles { grid-template-columns: repeat(3, 1fr) !important; }
   #people-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }
+/* --- stabilize mobile layout --- */
+.hero, .visual { overflow: hidden; }            /* clip any sub‑pixel overflow */
+html, body { overflow-x: hidden; }              /* no horizontal nudge/scroll */
+.container { padding-left: 4vw; padding-right: 4vw; } /* small breathing room */
+
+@media (max-width: 900px) {
+  #neuron { right: 0 !important; }             /* avoid the -2% edge spill */
+}
 </style>
 </head>
 <body>
@@ -160,24 +168,61 @@ footer{background:#0a1523;color:#ddd6c5;padding:32px 0}
 </footer>
 
 <script>
-document.getElementById('y').textContent = new Date().getFullYear();
-// Simple constellation
 (function(){
-  const c=document.getElementById('constellation'); const x=c.getContext('2d'); let w,h,p=[]; const N=60;
-  function R(){w=c.clientWidth;h=c.clientHeight;c.width=w;c.height=h;p=Array.from({length:N},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35}))}
-  function S(){x.clearRect(0,0,w,h); const m=120; p.forEach(a=>{a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>w)a.vx*=-1;if(a.y<0||a.y>h)a.vy*=-1;x.beginPath();x.arc(a.x,a.y,1.6,0,Math.PI*2);x.fillStyle='rgba(241,204,125,.85)';x.fill()}); x.strokeStyle='rgba(241,204,125,.24)'; for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.hypot(dx,dy);if(d<m){x.globalAlpha=1-(d/m);x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.stroke();}} x.globalAlpha=1; requestAnimationFrame(S)}
-  R();S(); addEventListener('resize',R);
-})();
-// Data loader + avatar helpers
-(async function(){
-  function initials(name){return (String(name||'').trim().split(/\s+/).map(w=>w[0]?w[0].toUpperCase():'').filter(Boolean).slice(0,2).join(''))||'NL'}
-  function avatarSVG(text,size,bg='#0e1a2b',fg='#f1e9d7'){const f=Math.floor(size*0.38);const s=`<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}'><rect width='100%' height='100%' rx='14' fill='${bg}'/><text x='50%' y='58%' text-anchor='middle' font-family='Inter, Arial' font-size='${f}' fill='${fg}' font-weight='700'>${text}</text></svg>`;return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)}
-  function avatarSrc(p,size){return (p&&p.photo&&p.photo.trim()!=='')?p.photo:avatarSVG(initials(p&&p.name),size||88)}
-  async function load(){const r=await fetch('lab_data.json',{cache:'no-store'});return r.ok? r.json(): {news:[],publications:[],people:[]};}
-  const data=await load();
-  if(Array.isArray(data.publications)&&data.publications.length){const t=data.publications[0]; document.getElementById('feat-title').textContent=t.title; document.getElementById('feat-meta').textContent=[t.authors,t.journal,t.year].filter(Boolean).join(' — '); if(t.link) document.getElementById('feat-link').href=t.link;}
-  const news=document.getElementById('news'); if(news&&Array.isArray(data.news)){news.innerHTML=''; data.news.sort((a,b)=>a.date<b.date?1:-1).slice(0,6).forEach(n=>{const row=document.createElement('div'); row.className='news-item'; row.innerHTML=`<span class='news-date'>${n.date}</span><span>${n.link?`<a href='${n.link}'>${n.title}</a>`:n.title}</span>`; news.appendChild(row);});}
-  const grid=document.getElementById('people-grid'); if(grid&&Array.isArray(data.people)){grid.innerHTML=''; data.people.forEach(p=>{const card=document.createElement('article'); card.className='tile'; card.innerHTML=`<div style="display:flex;gap:14px;align-items:center"><img src="${avatarSrc(p,88)}" alt="${p.name}" width="88" height="88" style="width:88px;height:88px;border-radius:14px;object-fit:cover;border:1px solid #e7e2d8"/><div><h3 style="margin:0">${p.name}</h3><div style="color:#3f4550">${p.role||''}</div>${p.email?`<a href="mailto:${p.email}" style="color:#6a5320">${p.email}</a>`:''}</div></div>${p.bio?`<p style="margin:12px 0 0; color:#3f4550">${p.bio}</p>`:''}`; grid.appendChild(card);});}
+  const c = document.getElementById('constellation');
+  const ctx = c.getContext('2d');
+  let w, h, pts = [];
+  const N = 60;
+
+  function size(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = c.getBoundingClientRect();
+    w = rect.width;
+    h = rect.height;
+    c.width = Math.round(w * dpr);
+    c.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // (re)seed points to current size
+    pts = Array.from({length: N}, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35
+    }));
+  }
+
+  // throttle resize so mobile address-bar jitter doesn't constantly reflow
+  let rafId = null;
+  function onResize(){
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      rafId = null;
+      size();
+    });
+  }
+
+  size();
+  window.addEventListener('resize', onResize, { passive: true });
+
+  function step(){
+    ctx.clearRect(0, 0, w, h);
+    const max = 120;
+    for (const p of pts){
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(241,204,125,.85)'; ctx.fill();
+    }
+    ctx.strokeStyle = 'rgba(241,204,125,.24)';
+    for (let i=0;i<N;i++) for (let j=i+1;j<N;j++){
+      const a=pts[i], b=pts[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+      if (d < max){ ctx.globalAlpha = 1 - (d/max); ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+  step();
 })();
 </script>
 </body></html>
