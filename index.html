@@ -4,6 +4,7 @@
 <meta name="theme-color" content="#0e1a2b"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
 :root{--navy:#0e1a2b;--navy-2:#0a1523;--gold:#d3a85a;--cream:#f4efe6;--ink:#0f243a}
 *{box-sizing:border-box}body{margin:0;background:var(--navy);color:#f7f7f5;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6}
@@ -89,43 +90,45 @@ footer{background:#0a1523;color:#ddd6c5;padding:32px 0}
   #people-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }
 /* --- stabilize mobile layout --- */
-.hero, .visual { overflow: hidden; }            /* clip any sub‑pixel overflow */
+.hero, .visual { overflow: hidden; }            /* clip any sub-pixel overflow */
 html, body { overflow-x: hidden; }              /* no horizontal nudge/scroll */
 .container { padding-left: 4vw; padding-right: 4vw; } /* small breathing room */
 
-@media (max-width: 900px) {
-  #neuron { right: 0 !important; }             /* avoid the -2% edge spill */
-}
+header { overflow: hidden; }                    /* clip sub-pixel bleed */
+
 /* --- Fix mobile menu overflow (no layout change on desktop) --- */
-html, body { overflow-x: hidden; }              /* kill horizontal nudge */
-
-header { overflow: hidden; }                    /* clip sub‑pixel bleed */
-.container { padding-inline: 16px; }            /* small safe gutter */
-
 @media (max-width: 900px) {
-  /* Let the header content wrap to a new row on small screens */
+  /* Let header content wrap on small screens */
   .nav { flex-wrap: wrap; }
 
-  /* Make the menu itself wrap lines and use full width */
+  /* Make the nav line use full width */
   .nav nav { width: 100%; }
   .nav nav ul {
+    display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 8px 12px;           /* row gap / column gap */
-    margin: 8px 0 0 0;       /* remove default margins that add width */
+    gap: 8px 12px;
+    margin: 8px 0 0 0;
     padding: 0;
+    list-style: none;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
-  /* Slightly smaller links so they fit without overflow */
+  /* Slightly smaller links */
   .nav nav a {
-    font-size: 16px;         /* tune down from desktop */
+    font-size: 16px;
     line-height: 1.2;
   }
 
-  /* Prevent the logo/name from hogging width */
+  /* Prevent logo block from hogging width */
   .brand { flex: 0 1 auto; min-width: 0; }
+
+  /* Fix neuron SVG edge spill */
+  #neuron { right: 0 !important; }
 }
 
+/* Very small phones */
 @media (max-width: 420px) {
   .nav nav a { font-size: 15px; }
 }
