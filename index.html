@@ -96,6 +96,39 @@ html, body { overflow-x: hidden; }              /* no horizontal nudge/scroll */
 @media (max-width: 900px) {
   #neuron { right: 0 !important; }             /* avoid the -2% edge spill */
 }
+/* --- Fix mobile menu overflow (no layout change on desktop) --- */
+html, body { overflow-x: hidden; }              /* kill horizontal nudge */
+
+header { overflow: hidden; }                    /* clip sub‑pixel bleed */
+.container { padding-inline: 16px; }            /* small safe gutter */
+
+@media (max-width: 900px) {
+  /* Let the header content wrap to a new row on small screens */
+  .nav { flex-wrap: wrap; }
+
+  /* Make the menu itself wrap lines and use full width */
+  .nav nav { width: 100%; }
+  .nav nav ul {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 12px;           /* row gap / column gap */
+    margin: 8px 0 0 0;       /* remove default margins that add width */
+    padding: 0;
+  }
+
+  /* Slightly smaller links so they fit without overflow */
+  .nav nav a {
+    font-size: 16px;         /* tune down from desktop */
+    line-height: 1.2;
+  }
+
+  /* Prevent the logo/name from hogging width */
+  .brand { flex: 0 1 auto; min-width: 0; }
+}
+
+@media (max-width: 420px) {
+  .nav nav a { font-size: 15px; }
+}
 </style>
 </head>
 <body>
