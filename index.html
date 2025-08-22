@@ -267,7 +267,7 @@ header { overflow: hidden; }                    /* clip sub-pixel bleed */
   var y = document.getElementById('y');
   if (y) y.textContent = new Date().getFullYear();
 
-  // Helpers (no optional chaining to keep older Safari happy)
+  // Helpers (no optional chaining; broad compatibility)
   function initials(name){
     name = String(name || '').trim();
     if (!name) return 'NL';
@@ -276,28 +276,36 @@ header { overflow: hidden; }                    /* clip sub-pixel bleed */
     var b = parts[1] ? parts[1][0].toUpperCase() : '';
     return (a + b) || 'NL';
   }
-  function avatarSVG(text, size, bg, fg){
-    size = size || 88;
-    bg = bg || '#0e1a2b';
-    fg = fg || '#f1e9d7';
-    var f = Math.floor(size * 0.38);
-    var s =
-      "<svg xmlns='http://www.w3.org/2000/svg' width='" + size + "' height='" + size + "'>" +
-        "<rect width='100%' height='100%' rx='14' fill='" + bg + "'/>" +
-        "<text x='50%' y='58%' text-anchor='middle' font-family='Inter, Arial' font-size='" + f + "' fill='" + fg + "' font-weight='700'>" + text + "</text>" +
-      "</svg>";
-    return 'data:image/svg+xml;utf8,' + encodeURIComponent(s);
-  }
-  function avatarSrc(p, size){
-    if (p && p.photo && p.photo.trim() !== '') return p.photo;
-    return avatarSVG(initials(p && p.name), size || 88);
+
+  // base64 encode (handles unicode safely)
+  function toBase64(str){
+    try { return btoa(unescape(encodeURIComponent(str))); }
+    catch(e){ return btoa(str); }
   }
 
-  // Load JSON with guards (relative path helps on GitHub Pages)
+  function avatarDataURL(text, size){
+    size = size || 88;
+    var f = Math.floor(size * 0.38);
+    var svg =
+      "<svg xmlns='http://www.w3.org/2000/svg' width='" + size + "' height='" + size + "'>" +
+        "<rect width='100%' height='100%' rx='14' fill='#0e1a2b'/>" +
+        "<text x='50%' y='58%' text-anchor='middle' font-family='Inter, Arial' font-size='" + f + "' fill='#f1e9d7' font-weight='700'>" +
+          text +
+        "</text>" +
+      "</svg>";
+    return "data:image/svg+xml;base64," + toBase64(svg);
+  }
+
+  function avatarSrc(p, size){
+    if (p && p.photo && p.photo.trim() !== '') return p.photo;
+    return avatarDataURL(initials(p && p.name), size || 88);
+  }
+
+  // Load JSON with guards
   async function loadJSON(){
     try {
-      var r = await fetch('./lab_data.json', { cache: 'no-store' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
+      var r = await fetch("./lab_data.json", { cache: "no-store" });
+      if (!r.ok) throw new Error("HTTP " + r.status);
       return await r.json();
     } catch (e) {
       return { __error: String(e) };
@@ -314,7 +322,7 @@ header { overflow: hidden; }                    /* clip sub-pixel bleed */
       var mEl = document.getElementById('feat-meta');
       var lEl = document.getElementById('feat-link');
       if (tEl) tEl.textContent = p.title || 'Featured Publication';
-      if (mEl) mEl.textContent = [p.authors, p.journal, p.year].filter(Boolean).join(' — ');
+      if (mEl) mEl.textContent  = [p.authors, p.journal, p.year].filter(Boolean).join(' — ');
       if (lEl && p.link) lEl.setAttribute('href', p.link);
     }
   } catch(_) {}
@@ -349,10 +357,10 @@ header { overflow: hidden; }                    /* clip sub-pixel bleed */
     if (grid){
       grid.innerHTML = '';
       var people = (Array.isArray(data.people) && data.people.length) ? data.people : [];
-      // If nothing loaded, show placeholders so you can see the section working
       if (!people.length && data.__error){
+        // placeholders just so the section shows when JSON fails
         people = [
-          { name:'Daniel da Silva', role:'Principal Investigator', email:'', photo:'', bio:'(placeholder bio)' },
+          { name:'Daniel da Silva', role:'Principal Investigator', photo:'', bio:'(placeholder bio)' },
           { name:'Postdoc Name', role:'Postdoctoral Fellow', photo:'', bio:'(placeholder bio)' },
           { name:'Graduate Student', role:'PhD Student', photo:'', bio:'(placeholder bio)' }
         ];
@@ -368,7 +376,6 @@ header { overflow: hidden; }                    /* clip sub-pixel bleed */
             "<div>" +
               "<h3 style='margin:0'>" + (person.name||'') + "</h3>" +
               "<div style='color:#3f4550'>" + (person.role||'') + "</div>" +
-              (person.email ? "<a href='mailto:" + person.email + "' style='color:#6a5320'>" + person.email + "</a>" : "") +
             "</div>" +
           "</div>" +
           (person.bio ? "<p style='margin:12px 0 0;color:#3f4550'>" + person.bio + "</p>" : "");
