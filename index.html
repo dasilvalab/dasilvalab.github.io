@@ -261,4 +261,127 @@ header { overflow: hidden; }                    /* clip sub-pixel bleed */
   step();
 })();
 </script>
+<script>
+(async function(){
+  // Footer year
+  var y = document.getElementById('y');
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Helpers (no optional chaining to keep older Safari happy)
+  function initials(name){
+    name = String(name || '').trim();
+    if (!name) return 'NL';
+    var parts = name.split(/\s+/);
+    var a = parts[0] ? parts[0][0].toUpperCase() : '';
+    var b = parts[1] ? parts[1][0].toUpperCase() : '';
+    return (a + b) || 'NL';
+  }
+  function avatarSVG(text, size, bg, fg){
+    size = size || 88;
+    bg = bg || '#0e1a2b';
+    fg = fg || '#f1e9d7';
+    var f = Math.floor(size * 0.38);
+    var s =
+      "<svg xmlns='http://www.w3.org/2000/svg' width='" + size + "' height='" + size + "'>" +
+        "<rect width='100%' height='100%' rx='14' fill='" + bg + "'/>" +
+        "<text x='50%' y='58%' text-anchor='middle' font-family='Inter, Arial' font-size='" + f + "' fill='" + fg + "' font-weight='700'>" + text + "</text>" +
+      "</svg>";
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(s);
+  }
+  function avatarSrc(p, size){
+    if (p && p.photo && p.photo.trim() !== '') return p.photo;
+    return avatarSVG(initials(p && p.name), size || 88);
+  }
+
+  // Load JSON with guards (relative path helps on GitHub Pages)
+  async function loadJSON(){
+    try {
+      var r = await fetch('./lab_data.json', { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return await r.json();
+    } catch (e) {
+      return { __error: String(e) };
+    }
+  }
+
+  var data = await loadJSON();
+
+  // Featured publication
+  try {
+    if (data.publications && data.publications.length){
+      var p = data.publications[0];
+      var tEl = document.getElementById('feat-title');
+      var mEl = document.getElementById('feat-meta');
+      var lEl = document.getElementById('feat-link');
+      if (tEl) tEl.textContent = p.title || 'Featured Publication';
+      if (mEl) mEl.textContent = [p.authors, p.journal, p.year].filter(Boolean).join(' — ');
+      if (lEl && p.link) lEl.setAttribute('href', p.link);
+    }
+  } catch(_) {}
+
+  // News
+  try {
+    var newsEl = document.getElementById('news');
+    if (newsEl){
+      newsEl.innerHTML = '';
+      var items = Array.isArray(data.news) ? data.news.slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; }) : [];
+      for (var i=0;i<items.length;i++){
+        var n = items[i];
+        var row = document.createElement('div');
+        row.className = 'news-item';
+        row.innerHTML =
+          "<span class='news-date'>" + (n.date || '') + "</span>" +
+          "<span>" + (n.link ? ("<a href='" + n.link + "'>" + (n.title||'') + "</a>") : (n.title || '')) + "</span>";
+        newsEl.appendChild(row);
+      }
+      if (!items.length && data.__error){
+        var hint = document.createElement('div');
+        hint.style.cssText = 'margin-top:8px;color:#6a5320;font-size:.9rem;opacity:.9';
+        hint.textContent = 'Note: Could not load news from lab_data.json.';
+        newsEl.appendChild(hint);
+      }
+    }
+  } catch(_) {}
+
+  // People
+  try {
+    var grid = document.getElementById('people-grid');
+    if (grid){
+      grid.innerHTML = '';
+      var people = (Array.isArray(data.people) && data.people.length) ? data.people : [];
+      // If nothing loaded, show placeholders so you can see the section working
+      if (!people.length && data.__error){
+        people = [
+          { name:'Daniel da Silva', role:'Principal Investigator', email:'', photo:'', bio:'(placeholder bio)' },
+          { name:'Postdoc Name', role:'Postdoctoral Fellow', photo:'', bio:'(placeholder bio)' },
+          { name:'Graduate Student', role:'PhD Student', photo:'', bio:'(placeholder bio)' }
+        ];
+      }
+      for (var j=0;j<people.length;j++){
+        var person = people[j] || {};
+        var card = document.createElement('article');
+        card.className = 'tile';
+        card.innerHTML =
+          "<div style='display:flex;gap:14px;align-items:center'>" +
+            "<img src='" + avatarSrc(person,88) + "' alt='" + (person.name||'Person') + "' width='88' height='88' " +
+                 "style='width:88px;height:88px;border-radius:14px;object-fit:cover;border:1px solid #e7e2d8'/>" +
+            "<div>" +
+              "<h3 style='margin:0'>" + (person.name||'') + "</h3>" +
+              "<div style='color:#3f4550'>" + (person.role||'') + "</div>" +
+              (person.email ? "<a href='mailto:" + person.email + "' style='color:#6a5320'>" + person.email + "</a>" : "") +
+            "</div>" +
+          "</div>" +
+          (person.bio ? "<p style='margin:12px 0 0;color:#3f4550'>" + person.bio + "</p>" : "");
+        grid.appendChild(card);
+      }
+      if (!people.length){
+        var note = document.createElement('div');
+        note.style.cssText = 'margin-top:8px;color:#6a5320;font-size:.9rem;opacity:.9';
+        note.textContent = 'No people in lab_data.json yet.';
+        grid.appendChild(note);
+      }
+    }
+  } catch(_) {}
+})();
+</script>
 </body></html>
