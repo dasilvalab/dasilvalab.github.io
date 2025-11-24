@@ -1,5 +1,74 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<html lang="en"><head>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+
+    /* =============================
+       1. PEOPLE LIST — da Silva Lab
+       ============================= */
+    {
+      "@type": "ItemList",
+      "@id": "https://www.dasilvalab.org/#people",
+      "name": "da Silva Lab Members",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://www.dasilvalab.org/#daniel"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": "https://www.dasilvalab.org/#postdoc1"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": "https://www.dasilvalab.org/#grad1"
+        }
+      ]
+    },
+
+    /* =============================
+       2. POSTDOC — EXAMPLE PERSON
+       Replace name/photo/email when real
+       ============================= */
+    {
+      "@type": "Person",
+      "@id": "https://www.dasilvalab.org/#postdoc1",
+      "name": "Postdoc Name",
+      "jobTitle": "Postdoctoral Fellow",
+      "worksFor": {
+        "@id": "https://www.dasilvalab.org/#lab"
+      },
+      "description": "Postdoctoral fellow working on synaptic physiology and CUT&RUN.",
+      "image": "https://www.dasilvalab.org/assets/people/postdoc1.jpg",
+      "email": "mailto:postdoc@example.org"
+    },
+
+    /* =============================
+       3. GRADUATE STUDENT — EXAMPLE
+       ============================= */
+    {
+      "@type": "Person",
+      "@id": "https://www.dasilvalab.org/#grad1",
+      "name": "Graduate Student",
+      "jobTitle": "PhD Student",
+      "worksFor": {
+        "@id": "https://www.dasilvalab.org/#lab"
+      },
+      "description": "PhD student developing Falcon and multi-omics integration tools.",
+      "image": "https://www.dasilvalab.org/assets/people/grad1.jpg"
+    }
+
+  ]
+}
+</script>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>People — NeuroLab</title><meta name="theme-color" content="#0e1a2b"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -15,7 +84,49 @@ main{background:var(--cream);color:#111}.section{padding:42px 0 60px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:#fff;border:1px solid #e7e2d8;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(17,20,24,.04)}
 .top{display:flex;gap:14px;padding:16px}.avatar{width:92px;height:92px;border-radius:14px;object-fit:cover;border:1px solid #ece6da}
 .bio{padding:0 16px 16px;display:none}.bio.show{display:block}.toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px dashed #eadfcf;cursor:pointer;background:linear-gradient(180deg,#fff,#fbf9f6)}.chev{transition:transform .2s}.chev.open{transform:rotate(180deg)}
-</style></head><body>
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+
+  "name": "Daniel Almeida da Silva e Silva",
+  "alternateName": [
+    "Daniel da Silva",
+    "Daniel Almeida",
+    "Daniel Silva",
+    "Daniel da Silva e Silva",
+    "Daniel daSilva",
+    "Daniel DaSilva",
+    "Daniel Da Silva",
+    "Daniel Silva-e-Silva"
+  ],
+
+  "givenName": "Daniel",
+  "familyName": "Almeida da Silva e Silva",
+  
+  "jobTitle": "Assistant Professor of Neuroscience",
+  "description": "Neuroscientist investigating molecular, epigenetic, and synaptic mechanisms underlying vulnerability and resilience in neuropsychiatric disorders.",
+  
+  "affiliation": {
+    "@type": "Organization",
+    "name": "Instituto Israelita de Ensino e Pesquisa Albert Einstein",
+    "url": "https://www.einstein.br"
+  },
+
+  "url": "https://www.dasilvalab.org",
+  "image": "https://scholars.mssm.edu/files-asset/204587011/0000072500101249200101.jpg?w=320&f=webp",
+
+  "sameAs": [
+    "https://scholar.google.com/citations?user=gMpuW-wAAAAJ&hl=pt-BR",
+    "https://orcid.org/0000-0003-0033-3270",
+    "https://www.ncbi.nlm.nih.gov/myncbi/daniel.silva%20e%20silva.1/bibliography/public/",
+    "https://profiles.icahn.mssm.edu/daniel-almeida-da-silva-e-silva",
+    "https://www.dasilvalab.org"
+  ]
+}
+</script>
+</head><body>
 <header><div class="container nav"><a class="brand" href="index.html"><span class="brand-icon"></span><span>NeuroLab</span></a>
 <nav><ul style="display:flex;gap:24px;list-style:none;margin:0;padding:0"><li><a href="index.html#research">Research</a></li><li><a href="people.html">People</a></li><li><a href="publications.html">Publications</a></li></ul></nav></div></header>
 <section class="hero"><div class="container"><div style="color:#d3a85a;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;font-weight:600">People</div><h1>Our Team</h1><p>An interdisciplinary group blending neuroscience, epigenomics, and computational biology.</p></div></section>

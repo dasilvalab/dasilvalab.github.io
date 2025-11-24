@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+
+    /* =============================
+       1. JOIN US PAGE
+       ============================= */
+    {
+      "@type": "WebPage",
+      "@id": "https://www.dasilvalab.org/joinus.html#webpage",
+      "url": "https://www.dasilvalab.org/joinus.html",
+      "name": "Join Us — da Silva Lab",
+      "isPartOf": {
+        "@id": "https://www.dasilvalab.org/#website"
+      },
+      "description": "Open positions in the da Silva Lab, including postdoctoral, graduate, and research scientist opportunities.",
+      "breadcrumb": {
+        "@id": "https://www.dasilvalab.org/joinus.html#breadcrumb"
+      },
+      "about": {
+        "@id": "https://www.dasilvalab.org/#lab"
+      }
+    },
+
+    /* =============================
+       2. JOB POSTING — BIOINFORMATICS RESEARCH SCIENTIST
+       ============================= */
+    {
+      "@type": "JobPosting",
+      "@id": "https://www.dasilvalab.org/joinus.html#bioinfojob",
+      "title": "Bioinformatics Research Scientist",
+      "description": "The da Silva Lab is seeking a Bioinformatics Research Scientist to help build our new laboratory in São Paulo and develop multi-omic and computational tools to understand vulnerability and resilience in psychiatric disorders.",
+      "datePosted": "2025-01-01",
+      "employmentType": "FULL_TIME",
+      "applicantLocationRequirements": "BR",
+      "hiringOrganization": {
+        "@id": "https://www.dasilvalab.org/#lab"
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "São Paulo",
+          "addressRegion": "SP",
+          "addressCountry": "Brazil"
+        }
+      },
+      "qualifications": [
+        "PhD and postdoctoral experience including international training",
+        "Functional proficiency in English",
+        "Experience in bioinformatics and omic data analysis",
+        "Intermediate experience in R"
+      ],
+      "educationRequirements": "PhD",
+      "industry": "Neuroscience, Omics, Computational Biology",
+      "directApply": false,
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "da Silva Lab",
+        "value": "BioinformaticsResearchScientist2025"
+      }
+    },
+
+    /* =============================
+       3. BREADCRUMBS
+       ============================= */
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.dasilvalab.org/joinus.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.dasilvalab.org"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Join Us",
+          "item": "https://www.dasilvalab.org/joinus.html"
+        }
+      ]
+    }
+
+  ]
+}
+</script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Join Us — da Silva lab</title>
+<meta name="theme-color" content="#0e1a2b"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--navy:#0e1a2b;--navy-2:#0a1523;--gold:#d3a85a;--cream:#f4efe6;--ink:#0f243a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:#f7f7f5;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6}
+.container{width:min(1150px,92vw);margin:0 auto}
+
+/* Header */
+header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(160%) blur(8px);
+background:linear-gradient(180deg, rgba(10,18,31,.85), rgba(10,18,31,.65));
+border-bottom:1px solid rgba(211,168,90,.18)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;color:#fff;text-decoration:none}
+.brand:hover{color:var(--gold)}
+.brand-icon{width:28px;height:28px;border-radius:8px;
+background:radial-gradient(80% 80% at 30% 30%, var(--gold), #a1762b 70%, #6d5326 100%)}
+nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+nav a{text-decoration:none;color:#fff;opacity:.9}
+nav a:hover{opacity:1;color:var(--gold)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden}
+.hero::before {
+    background:linear-gradient(90deg, rgba(14,26,43,0.75) 0%, rgba(14,26,43,0.0) 60%);
+}
+.hero-inner{display:grid;grid-template-columns:1fr;align-items:center;padding:clamp(20px,1vw,20px) 0;text-align:center}
+
+#openings.section {
+  padding-top: 0;
+}
+
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);color:#fff;margin:0.3em 0}
+.lead{max-width:60ch;margin:0 auto 1.5em;color:rgba(255,255,255,0.88);font-size:1.1rem}
+.cta{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;border:1px solid rgba(241,204,125,0.6);
+background:linear-gradient(180deg, rgba(241,204,125,0.18), rgba(211,168,90,0.1));color:var(--gold);
+font-weight:600;text-decoration:none;transition:all .25s ease}
+.cta:hover{background:rgba(241,204,125,0.22);box-shadow:0 0 12px rgba(241,204,125,0.35);color:#fff;transform:translateY(-1px)}
+
+/* Section layouts */
+.section{padding:80px 0;position:relative;z-index:1}
+.section.light{background:var(--cream);color:#111}
+.section.dark{background:linear-gradient(180deg,#0e1a2b,#0b1c2d);color:#eee}
+h2{font-family:Playfair Display,serif;font-size:2rem;margin-bottom:0.6em;color:var(--ink)}
+.dark h2{color:#f4efe6}
+.columns{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;align-items:start}
+.columns p{margin-top:0}
+ul.custom{list-style:none;padding-left:0;margin:1em 0}
+ul.custom li::before{content:"•";color:var(--gold);margin-right:10px}
+@media(max-width:850px){.columns{grid-template-columns:1fr;text-align:center}}
+
+footer{background:#0a1523;color:#ddd6c5;padding:32px 0;text-align:center}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html"><span class="brand-icon"></span><span>da Silva lab</span></a>
+    <nav>
+      <ul>
+        <li><a href="index.html#people">People</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="#">Publications</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="joinus.html">Join Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h1>Join Our Team</h1>
+      <p class="lead">We are always looking for curious, driven scientists who want to bridge molecular neuroscience and data science to uncover how the brain builds resilience.</p>
+      <a class="cta" href="#openings">See Open Positions ▼</a>
+    </div>
+  </div>
+</main>
+
+<section id="openings" class="section light">
+  <div class="container">
+    <h2>Open Positions</h2>
+    <!-- Bioinformatics Position -->
+<div class="columns" style="margin-bottom:60px">
+  <div style="grid-column:1 / -1">
+    <h3>Bioinformatics Research Scientist (São Paulo)</h3>
+    <p>
+      The Da Silva Lab is being established at the 
+      <strong>Instituto Israelita de Ensino e Pesquisa Albert Einstein (São Paulo, Brazil)</strong>, 
+      led by Dr. Daniel da Silva (Assistant Professor, Icahn School of Medicine at Mount Sinai).
+    </p>
+
+    <p>
+      We are seeking a <strong>Bioinformatics Research Scientist</strong> to join the group 
+      during this foundational stage and help build our new laboratory in Brazil.
+      Our work integrates neuroscience, multi-omic data, and computational modeling 
+      to understand molecular and epigenetic mechanisms of vulnerability and resilience 
+      in psychiatric disorders.
+    </p>
+
+    <h4>Requirements</h4>
+    <ul class="custom">
+      <li>PhD and postdoctoral experience (including international experience)</li>
+      <li>Functional proficiency in English</li>
+      <li>Basic experience in bioinformatics and omics data analysis</li>
+      <li>Intermediate knowledge in R</li>
+    </ul>
+
+    <h4>Profile</h4>
+    <p>
+      A curious, collaborative scientist passionate about research and eager to grow 
+      scientifically and professionally.
+    </p>
+
+    <p><strong>Location:</strong> São Paulo, SP (Brazil)</p>
+
+    <p>
+      <strong>How to apply:</strong><br>
+      Send your CV, a brief statement of research interests and contact information for 2 references to  
+      <a href="mailto:daniel.dasilva@mssm.edu" style="color:var(--gold);font-weight:600;text-decoration:none">
+        daniel.dasilva@mssm.edu
+      </a>.
+      Applications will be reviewed on a rolling basis.
+    </p>
+  </div>
+</div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="container">
+    <h2>Life in the Lab</h2>
+    <div class="columns">
+      <div>
+        <p>Our lab combines rigorous neuroscience with a creative, data-driven mindset. We work collaboratively, value diverse perspectives, and believe that science thrives when curiosity meets purpose.</p>
+        <p>Located at <strong>Instituto Israelita de Ensino e Pesquisa Albert Einstein</strong>, our group benefits from outstanding core facilities and a vibrant neuroscience community spanning molecular, cellular, systems, and computational expertise.</p>
+      </div>
+      <div>
+        <p>Whether you enjoy patch-clamp electrophysiology, coding, imaging neurons,  pharmacology or behavioral neuroscience, you’ll find space to grow here. We support independence, technical mastery, and teamwork equally.</p>
+        <p>We encourage scientists from underrepresented backgrounds to apply and join our mission to decode brain resilience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section light">
+  <div class="container" style="text-align:center">
+    <h2>Interested?</h2>
+    <p style="max-width:60ch;margin:0 auto 1.2em">
+      Send your CV, a brief statement of research interests and contact information for 2 references to 
+      <a href="mailto:daniel.dasilva@mssm.edu" style="color:var(--gold);text-decoration:none;font-weight:600">daniel.dasilva@mssm.edu</a>.
+    </p>
+    <a class="cta" href="mailto:daniel.dasilva@mssm.edu">Apply Now ✉</a>
+  </div>
+</section>
+
+<footer>
+  © <span id="y"></span> NeuroLab — da Silva lab
+</footer>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
