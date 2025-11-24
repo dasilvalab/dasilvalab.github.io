@@ -1,53 +1,5 @@
 {
-  "news": [
-    {
-      "date": "2025-09-10",
-      "title": "Talk: Decoding cell-type epigenomes in AUD",
-      "link": "#"
-    },
-    {
-      "date": "2025-08-22",
-      "title": "Preprint companion datasets released",
-      "link": "#"
-    },
-    {
-      "date": "2025-08-05",
-      "title": "New student joins the lab \u2014 welcome!",
-      "link": "#"
-    }
-  ],
-  "publications": [
-    {
-      "title": "Precision Epigenomics Reveals Molecular Drivers of Compulsive Alcohol Drinking",
-      "authors": "Doe, D. da Silva, et al.",
-      "journal": "Nature Neuroscience",
-      "year": 2025,
-      "link": "#",
-      "tags": [
-        "epigenomics",
-        "AUD"
-      ]
-    }
-  ],
-  "people": [
-    {
-      "name": "Daniel da Silva",
-      "role": "Principal Investigator",
-      "email": "daniel@example.org",
-      "photo": "",
-      "bio": "Neuroscience, epigenomics, and computational biology."
-    },
-    {
-      "name": "Postdoc Name",
-      "role": "Postdoctoral Fellow",
-      "photo": "",
-      "bio": "Synaptic physiology and CUT&RUN."
-    },
-    {
-      "name": "Graduate Student",
-      "role": "PhD Student",
-      "photo": "",
-      "bio": "Falcon development and multi-omics integration."
-    }
-  ]
+  "news": [],
+  "publications": [],
+  "people": []
 }
